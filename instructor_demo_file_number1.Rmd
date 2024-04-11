@@ -1,0 +1,85 @@
+---
+title: "Chapter 15 Instructor Demo"
+author: "Thomas Lackey"
+date: "2023-11-06"
+output:
+    html_document: default
+    toc: true
+    toc_float: true
+    theme: spacelab
+---
+
+##### What follows is the syntax to add chunks of code to your Markdown document
+##### Showing how to insert a heading and a text paragraph. 
+##### Explaining How to Insert One or More Paragraphs of Text
+      
+      Adding paragraphs works just like any text editor. You just press enter twice and a new paragraph starts. 
+      
+      To start the second paragraph press enter twice and type the second paragraph.
+
+##### What follows is the syntax to add chunks of code to your Markdown document
+##### Code Chunks
+
+Code chunks are embedded in a markdown file so that plots can be rendered, or other R commands can be executed when the markdown file is shared. 
+A code chunk’s start is defined in a .Rmd file by 3 back ticks and the letter R within curly braces. The chunk is ended by three back ticks. 
+
+You have the option to 
+
+#### 1) print the code as well as the code's output. 
+```{r}
+print("some r code would go here")
+```
+#### 2) print just the output by passing an echo=FALSE argument 
+
+```{r echo = FALSE}
+print("some r code would go here, but you won't see the print command")
+```
+
+#### 3) see only the code, and not the output
+```{r results=FALSE, message=FALSE, warning=FALSE}
+print("some r code would go here, but you won't see output, you would only see the print command, you can also choose to surpress messages and warnings")
+```
+
+The easiest way to start a code chunk in an .Rmd file is to use the menu Code->Insert Chunk
+
+
+##### Run a chunk of code within an .Rmd file
+
+In an R script you typically run one command at a time. 
+In an .Rmd file you may execute and entire chunk of code, to ensure that it’s working before sharing with others. 
+There are several additions to the Run options when you are working with an .Rmd file. These are accessible in the drop-down menu next to the green Run arrow at the top of the Source window in R Studio. 
+
+
+1. You can run the current chunk of code.
+
+
+2. You can run all chunks of code that occur before the current chunk.
+
+
+3. You can run a setup chunk of code. (More about this later). 
+
+The following is an example of a chunk of code that plots the Scatter plot for the irises data that we have worked with before. In this case I have opted to show the code, as well as any messages or warnings. By testing the code chunk right here we don't have to knit the entire file! 
+
+```{r}
+library("tidyverse")
+library("datasets")
+ggplot(iris, 
+       aes(x = Sepal.Length, y = Sepal.Width, color = Species))+
+  geom_point()
+```
+
+##### formatting text in a markdown file
+
+
+In this paragraph we will delineate some text as code by inserting a backtick don't forget to load    `library("datasets")`
+
+Use the ^ and the ~ to provide a superscript^2^ or a subscript~2~ to text.
+
+Use dashes to make unordered lists of items
+- unordered item 1
+- unordered item 2
+  - unordered sub item for item 2
+
+Use an asterik to make some text *italic*, or two asterisk to make some text **bold**
+
+##### Creating Dynamic Code

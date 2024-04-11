@@ -1,0 +1,62 @@
+In this example we are reporting the date in the Header as the system date, instead of a hard coded date by using back ticks to retrieve the current. 
+
+date: "`r Sys.Date()`" 
+
+---
+title: "Automated Report"
+author: "Scott McCoy"
+date: "`r Sys.Date()`"
+output: html_document
+---
+The first code chunk loads the tidyverse and the maps libraries, it then retrieves the fires_prepared.rds file into a tibble called fires. The .rds file type is used to share objects between R sessions, so that the object can be shared with others.
+Next it extracts the current date and current month from the system date. For the testing purposes of this file, the current year is hard coded to 2012. But if the  file was dynamically updated the current year would be extracted.
+
+Finally the chunk filters the data by the hard coded 2012 year, the current month, and the state = 'CA', or California.  
+
+```{r}
+library("tidyverse")
+library("maps")
+fires <- readRDS("../../data/fires_prepared.rds")
+
+curDate <- Sys.Date()
+curMonth <- format(curDate, "%m")
+# curYear <- format(curDate, "%Y")   # for production
+curYear <- 2012                      # for testing
+
+fires_filtered <- fires %>% 
+  filter(Year == curYear & Month == curMonth & State == "CA")
+```
+
+
+The next code snippet of R code is used to create a header that dynamically inserts and formats the 2012, and the current system month(in this case November), into the header.
+
+# California fire size statistics for `r format(curDate, "%B")` `r 
+curYear`
+
+The next code chunk uses the summary function to filter the fires_filtered tibble by size. This will allow the data points on the map to be plotted by fire size.  
+
+```{r}
+summary(fires_filtered$Size)
+```
+
+# All fires in California for `r format(curDate, "%B")` `r curYear`
+
+
+Finally the code chunk below retrieves map_data for the state of california and then uses ggplot, geom_polygon, and geom_point functions to overlay the fires by size over a map of California. 
+
+```{r}
+ca_map <- map_data("state", "california")
+
+ggplot(ca_map, aes(x = long, y = lat)) + 
+  geom_polygon(color = "black", fill = "white") +
+  geom_point(data = fires_filtered, 
+             mapping = aes(x = Longitude, y = Latitude, 
+                           size = Size, color = Size)) +
+  scale_color_gradient2(low = "yellow", mid = "orange", 
+                        high = "darkred") +
+  labs(x = "", y = "") +
+  guides(size = "none", color = "none") +
+  coord_fixed()
+```
+
+Normally if you were sharing your analysis with an end user you would suppress the code in the .Rmd file. I've left it here so that you can see how the code is working. If you were working with a co-worker on an analysis, sharing the code would make sense. 
