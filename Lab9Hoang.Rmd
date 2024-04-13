@@ -1,5 +1,5 @@
 ---
-title: "HoangLab9"
+title: "Lab9Hoang"
 author: "Christine Hoang"
 date: "2024-04-13"
 output:
@@ -13,6 +13,7 @@ output:
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library("tidyverse")
 library("datasets")
+library ("ggplot2")
 numbers <- read_csv("numbers.csv")
 
 ```
@@ -23,17 +24,21 @@ numbers <- read_csv("numbers.csv")
 This code shows the values of the **Num** column.
 
 ```{r}
-numbers<- numbers %>%
+numbers_num<- numbers %>%
   select(Num)
-numbers
+numbers_num
 ```
 
 ## A plot of the Num and NumSquared columns
 
 This plot shows the relationship between the **Num** and **NumSquared** columns.
 
-```{r echo=FALSE}
-
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+numbers_all<-numbers %>%
+  select(Num, NumSquared)
+numbers_all
+ggplot (numbers_all, aes(x=Num, y=NumSquared))+ 
+  geom_line()
 ```
 
 
