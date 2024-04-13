@@ -1,0 +1,44 @@
+---
+title: "HoangLab9"
+author: "Christine Hoang"
+date: "2024-04-13"
+output:
+    html_document: default
+    toc: true
+    toc_float: true
+    theme: spacelab
+---
+
+### Only output
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library("tidyverse")
+library("datasets")
+numbers <- read_csv("numbers.csv")
+
+```
+
+# Lab 10 R Markdown - Christine Hoang
+## The Num column
+
+This code shows the values of the **Num** column.
+
+```{r}
+numbers<- numbers %>%
+  select(Num)
+numbers
+```
+
+## A plot of the Num and NumSquared columns
+
+This plot shows the relationship between the **Num** and **NumSquared** columns.
+
+```{r echo=FALSE}
+
+```
+
+
+
+
+
+
+
